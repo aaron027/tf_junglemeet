@@ -74,7 +74,6 @@ module "ecs" {
   container_cpu               = var.container_cpu
   container_memory            = var.container_memory
   service_desired_count       = var.service_desired_count
-  image_tag                   = var.image_tag
   container_environment = [
     { name = "LOG_LEVEL",
     value = "DEBUG" },

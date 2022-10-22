@@ -7,10 +7,6 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "image_tag" {
-  description = "the tag of image"
-}
-
 variable "region" {
   description = "the AWS region in which resources are created, you must set the availability_zones variable as well if you define this value to something other than the default"
   default     = "us-east-1"
