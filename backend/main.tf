@@ -9,28 +9,28 @@ terraform {
       version = "~>4.0"
     }
   }
-  # backend "s3" {
-  #   bucket  = "junglemeet-backend"
-  #   encrypt = true
-  #   key     = "terraform.tfstate"
-  #   region  = "us-east-1"
-    # dynamodb_table = "terraform-state-lock-dynamo"
-  # }
+  backend "s3" {
+    bucket  = "junglemeet-backend"
+    encrypt = true
+    key     = "terraform.tfstate"
+    region  = "us-east-1"
+    dynamodb_table = "terraform-state-lock-dynamo"
+  }
 }
 
-# resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
-#   name           = "terraform-state-lock-dynamo"
-#   hash_key       = "LockID"
-#   read_capacity  = 20
-#   write_capacity = 20
-#   attribute {
-#     name = "LockID"
-#     type = "S"
-#   }
-#   tags = {
-#     Name = "DynamoDB Terraform State Lock Table"
-#   }
-# }
+resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
+  name           = "terraform-state-lock-dynamo"
+  hash_key       = "LockID"
+  read_capacity  = 20
+  write_capacity = 20
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+  tags = {
+    Name = "DynamoDB Terraform State Lock Table"
+  }
+}
 
 module "vpc" {
   source             = "./vpc"
@@ -60,14 +60,6 @@ module "alb" {
   alb_tls_cert_arn    = var.tsl_certificate_arn
   health_check_path   = var.health_check_path
 }
-
-
-# module "secrets" {
-#   source              = "./secrets"
-#   name                = var.name
-#   environment         = var.environment
-#   application-secrets = var.application-secrets
-# }
 
 module "ecs" {
   source                      = "./ecs"

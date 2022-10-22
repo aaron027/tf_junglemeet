@@ -57,12 +57,6 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attach
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
-
-# data "aws_ecr_image" "service_image" {
-#   repository_name = "myapp"
-#   image_tag       = "latest"
-# }
-
 resource "aws_cloudwatch_log_group" "main" {
   name = "/ecs/${var.name}-task-${var.environment}"
 
@@ -99,7 +93,6 @@ resource "aws_ecs_task_definition" "main" {
         awslogs-region        = var.region
       }
     }
-    # secrets = var.container_secrets
   }])
 
   tags = {
