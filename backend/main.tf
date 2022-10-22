@@ -9,11 +9,11 @@ terraform {
       version = "~>4.0"
     }
   }
-  backend "s3" {
-    bucket  = "junglemeet-backend"
-    encrypt = true
-    key     = "terraform.tfstate"
-    region  = "us-east-1"
+  # backend "s3" {
+  #   bucket  = "junglemeet-backend"
+  #   encrypt = true
+  #   key     = "terraform.tfstate"
+  #   region  = "us-east-1"
     # dynamodb_table = "terraform-state-lock-dynamo"
   }
 }
