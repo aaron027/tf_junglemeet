@@ -15,7 +15,7 @@ terraform {
   #   key     = "terraform.tfstate"
   #   region  = "us-east-1"
     # dynamodb_table = "terraform-state-lock-dynamo"
-  }
+  # }
 }
 
 # resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
