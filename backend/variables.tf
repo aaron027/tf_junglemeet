@@ -1,3 +1,7 @@
+variable "domain_name" {
+  description = "the name of your stack, e.g. \"demo\""
+}
+
 variable "name" {
   description = "the name of your stack, e.g. \"demo\""
 }
@@ -21,8 +25,6 @@ variable "aws-region" {
   description = "AWS region to launch servers."
   default     = "us-east-1"
 }
-
-
 
 variable "availability_zones" {
   description = "a comma-separated list of availability zones, defaults to all AZ of the region, if set to something other than the defaults, both private_subnets and public_subnets have to be defined as well"

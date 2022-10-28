@@ -32,6 +32,12 @@ terraform {
 #   }
 # }
 
+module "route53" {
+  source      = "./route53"
+  domain_name = var.domain_name
+  dns_name    = module.alb.alb_dns_name
+}
+
 module "vpc" {
   source             = "./vpc"
   name               = var.name
@@ -51,11 +57,12 @@ module "security_groups" {
 }
 
 module "alb" {
-  source              = "./alb"
-  name                = var.name
-  vpc_id              = module.vpc.id
-  subnets             = module.vpc.public_subnets
-  environment         = var.environment
+  source      = "./alb"
+  name        = var.name
+  vpc_id      = module.vpc.id
+  subnets     = module.vpc.public_subnets
+  environment = var.environment
+  acm_arn = module.route53.acm_arn
   alb_security_groups = [module.security_groups.alb]
   alb_tls_cert_arn    = var.tsl_certificate_arn
   health_check_path   = var.health_check_path

@@ -13,8 +13,10 @@ resource "aws_lb" "main" {
   }
 }
 
-
-
+output "alb_dns_name" {
+  value = aws_lb.main.dns_name
+  description = "the domain name of loadbalancer"
+}
 
 resource "aws_alb_target_group" "main" {
   name        = "${var.name}-tg-${var.environment}"
@@ -51,20 +53,35 @@ resource "aws_alb_listener" "http" {
   }
 }
 
-# Redirect traffic to target group
-# resource "aws_alb_listener" "https" {
-#     load_balancer_arn = aws_lb.main.id
-#     port              = 443
-#     protocol          = "HTTPS"
+resource "aws_lb_listener" "this" {
+  load_balancer_arn = aws_lb.main.arn
 
-#     ssl_policy        = "ELBSecurityPolicy-2016-08"
-#     certificate_arn   = var.alb_tls_cert_arn
+  port              = 443
+  protocol          = "HTTPS"
 
-#     default_action {
-#         target_group_arn = aws_alb_target_group.main.id
-#         type             = "forward"
-#     }
-# }
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.acm_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.main.arn
+  }
+}
+
+resource "aws_lb_listener_rule" "redirect_based_on_path" {
+  listener_arn = aws_lb_listener.this.arn
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.main.arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/rest/v2/*"]
+    }
+  }
+}
 
 output "aws_alb_target_group_arn" {
   value = aws_alb_target_group.main.arn
