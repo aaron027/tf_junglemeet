@@ -1,5 +1,5 @@
-domain_name = "bo-chen.click"
-bucket_name = "bo-chen.click"
+domain_name = "aaron027.click"
+bucket_name = "aaron027.click"
 
 common_tags = {
   Project = "junglemeet_frontend"

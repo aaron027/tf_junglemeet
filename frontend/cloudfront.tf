@@ -100,8 +100,17 @@ resource "time_sleep" "wait_60_seconds" {
   create_duration = "60s"
 }
 
-output "www_regional_name" {
-  value = aws_s3_bucket.www_bucket.bucket_regional_domain_name
+resource "aws_s3_bucket_public_access_block" "www_bucket_public_access_block" {
+  bucket = aws_s3_bucket.www_bucket.bucket
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+
+  depends_on = [
+    aws_cloudfront_distribution.www_s3_distribution
+  ]
 }
 
 
