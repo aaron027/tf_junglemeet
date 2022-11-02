@@ -32,6 +32,12 @@ terraform {
 #   }
 # }
 
+module "route53" {
+  source      = "./route53"
+  domain_name = var.domain_name
+  dns_name    = module.alb.alb_dns_name
+}
+
 module "vpc" {
   source             = "./vpc"
   name               = var.name
@@ -51,11 +57,12 @@ module "security_groups" {
 }
 
 module "alb" {
-  source              = "./alb"
-  name                = var.name
-  vpc_id              = module.vpc.id
-  subnets             = module.vpc.public_subnets
-  environment         = var.environment
+  source      = "./alb"
+  name        = var.name
+  vpc_id      = module.vpc.id
+  subnets     = module.vpc.public_subnets
+  environment = var.environment
+  acm_arn = module.route53.acm_arn
   alb_security_groups = [module.security_groups.alb]
   alb_tls_cert_arn    = var.tsl_certificate_arn
   health_check_path   = var.health_check_path
@@ -74,7 +81,6 @@ module "ecs" {
   container_cpu               = var.container_cpu
   container_memory            = var.container_memory
   service_desired_count       = var.service_desired_count
-  image_tag                   = var.image_tag
   container_environment = [
     { name = "LOG_LEVEL",
     value = "DEBUG" },

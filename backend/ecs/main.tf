@@ -77,7 +77,7 @@ resource "aws_ecs_task_definition" "main" {
   task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
   container_definitions = jsonencode([{
     name        = "${var.name}-container-${var.environment}"
-    image       = "${var.container_image}:${var.image_tag}"
+    image       = "${var.container_image}:latest"
     essential   = true
     environment = var.container_environment
     portMappings = [{
@@ -116,7 +116,7 @@ resource "aws_ecs_service" "main" {
   desired_count                      = var.service_desired_count
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
-  health_check_grace_period_seconds  = 60
+  health_check_grace_period_seconds  = 300
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
 

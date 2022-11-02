@@ -47,8 +47,4 @@ variable "container_environment" {
   type        = list
 }
 
-variable "image_tag" {
-  description = "The tag of image"
-  type        = string
-}
 

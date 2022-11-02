@@ -1,14 +1,14 @@
+variable "domain_name" {
+  description = "the name of your domain name"
+}
+
 variable "name" {
-  description = "the name of your stack, e.g. \"demo\""
+  description = "the name of your stack"
 }
 
 variable "environment" {
-  description = "the name of your environment, e.g. \"prod\""
+  description = "the name of your environment"
   default     = "dev"
-}
-
-variable "image_tag" {
-  description = "the tag of image"
 }
 
 variable "region" {
@@ -25,8 +25,6 @@ variable "aws-region" {
   description = "AWS region to launch servers."
   default     = "us-east-1"
 }
-
-
 
 variable "availability_zones" {
   description = "a comma-separated list of availability zones, defaults to all AZ of the region, if set to something other than the defaults, both private_subnets and public_subnets have to be defined as well"
@@ -60,17 +58,17 @@ variable "container_port" {
 
 variable "container_cpu" {
   description = "The number of cpu units used by the task"
-  default     = 512
+  default     = 1024
 }
 
 variable "container_memory" {
   description = "The amount (in MiB) of memory used by the task"
-  default     = 1024
+  default     = 2048
 }
 
 variable "health_check_path" {
   description = "Http path for task health check"
-  default     = "/"
+  default     = "/health-check"
 }
 
 variable "tsl_certificate_arn" {
