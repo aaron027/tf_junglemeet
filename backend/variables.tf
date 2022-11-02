@@ -1,13 +1,13 @@
 variable "domain_name" {
-  description = "the name of your stack, e.g. \"demo\""
+  description = "the name of your domain name"
 }
 
 variable "name" {
-  description = "the name of your stack, e.g. \"demo\""
+  description = "the name of your stack"
 }
 
 variable "environment" {
-  description = "the name of your environment, e.g. \"prod\""
+  description = "the name of your environment"
   default     = "dev"
 }
 
@@ -58,17 +58,17 @@ variable "container_port" {
 
 variable "container_cpu" {
   description = "The number of cpu units used by the task"
-  default     = 512
+  default     = 1024
 }
 
 variable "container_memory" {
   description = "The amount (in MiB) of memory used by the task"
-  default     = 1024
+  default     = 2048
 }
 
 variable "health_check_path" {
   description = "Http path for task health check"
-  default     = "/"
+  default     = "/health-check"
 }
 
 variable "tsl_certificate_arn" {

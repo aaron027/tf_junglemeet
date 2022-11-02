@@ -20,17 +20,17 @@ output "alb_dns_name" {
 
 resource "aws_alb_target_group" "main" {
   name        = "${var.name}-tg-${var.environment}"
-  port        = 80
+  port        = 3000
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
 
   health_check {
     healthy_threshold   = "3"
-    interval            = "30"
+    interval            = "60"
     protocol            = "HTTP"
-    matcher             = "200"
-    timeout             = "3"
+    matcher             = "200,301,302"
+    timeout             = "5"
     path                = var.health_check_path
     unhealthy_threshold = "2"
   }
@@ -44,7 +44,7 @@ resource "aws_alb_target_group" "main" {
 # Redirect to https listener
 resource "aws_alb_listener" "http" {
   load_balancer_arn = aws_lb.main.id
-  port              = 80
+  port              = 3000
   protocol          = "HTTP"
 
   default_action {
