@@ -24,9 +24,6 @@ pipeline {
                     // some block
                     dir('frontend') {
                         sh '''
-//                             terraform init
-//                             terraform validate
-//                             terraform apply -auto-approve
                                terraform destroy -auto-approve
                         '''
                     }
@@ -39,9 +36,6 @@ pipeline {
                     // some block
                     dir('backend') {
                         sh '''
-//                             terraform init
-//                             terraform validate
-//                             terraform apply -auto-approve
                             terraform destroy -auto-approve
                         '''
                     }
@@ -50,7 +44,7 @@ pipeline {
         }
         
     }  
-   
+  
     post {
         always{
             echo 'I will always say Hello again! test for webhook'
