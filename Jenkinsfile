@@ -23,7 +23,7 @@ pipeline {
 //                            sh "${scannerHome}/bin/sonar-scanner"
 //                         }
 //                     }
-                        withSonarQubeEnv('sonarqube_frontend') {
+                        withSonarQubeEnv('sonarqube_7.9.6') {
                            echo 'The code scanning is running...'
                            sh "${scannerHome}/bin/sonar-scanner"
                         }
