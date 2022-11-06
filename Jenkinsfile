@@ -24,6 +24,7 @@ pipeline {
                     // some block
                     dir('frontend') {
                         sh '''
+                               terraform init
                                terraform destroy -auto-approve
                         '''
                     }
@@ -36,6 +37,7 @@ pipeline {
                     // some block
                     dir('backend') {
                         sh '''
+                        terraform init
                             terraform destroy -auto-approve
                         '''
                     }
