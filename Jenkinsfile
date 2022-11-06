@@ -5,18 +5,32 @@ pipeline {
         ansiColor('xterm')
     }
     stages{
+        stage('Sonarqube') {
+            environment {
+                scannerHome = tool 'Sonarqube_scanner'
+            }
+            steps {
+                withAWS(credentials: 'AWS_Credentials', region: 'us-east-1') {
+                    dir('frontend'){
+                         withSonarQubeEnv('sonarqube_frontend') {
+                           echo 'The code scanning is running...'
+                           sh "${scannerHome}/bin/sonar-scanner"
+                        }
+                    }
+                    dir('backend'){
+                         withSonarQubeEnv('sonarqube_frontend') {
+                           echo 'The code scanning is running...'
+                           sh "${scannerHome}/bin/sonar-scanner"
+                        }
+                    }
+                }
+            }
+        }
         stage('frontend stage') {
             steps {
                 withAWS(credentials: 'AWS_Credentials', region: 'us-east-1') {
                     // some block
                     dir('frontend') {
-                        environment {
-                            scannerHome = tool 'Sonarqube_scanner'
-                        }
-                        withSonarQubeEnv('sonarqube_frontend') {
-                           echo 'The code scanning is running...'
-                           sh "${scannerHome}/bin/sonar-scanner"
-                        }
                         sh '''
                             terraform init
                             terraform validate
@@ -31,13 +45,6 @@ pipeline {
                 withAWS(credentials: 'AWS_Credentials', region: 'us-east-1') {
                     // some block
                     dir('backend') {
-                        environment {
-                            scannerHome = tool 'Sonarqube_scanner'
-                        }
-                        withSonarQubeEnv('sonarqube_frontend') {
-                           echo 'The code scanning is running...'
-                           sh "${scannerHome}/bin/sonar-scanner"
-                        }
                         sh '''
                             terraform init
                             terraform validate
