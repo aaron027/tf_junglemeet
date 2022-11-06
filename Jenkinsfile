@@ -11,12 +11,12 @@ pipeline {
             }
             steps {
                 withAWS(credentials: 'AWS_Credentials', region: 'us-east-1') {
-                    dir('frontend'){
-                         withSonarQubeEnv('sonarqube_7.9.6') {
-                           echo 'The code scanning is running...'
-                           sh "${scannerHome}/bin/sonar-scanner"
-                        }
-                    }
+//                     dir('frontend'){
+//                          withSonarQubeEnv('sonarqube_7.9.6') {
+//                            echo 'The code scanning is running...'
+//                            sh "${scannerHome}/bin/sonar-scanner"
+//                         }
+//                     }
                     dir('backend'){
                          withSonarQubeEnv('sonarqube_7.9.6') {
                            echo 'The code scanning is running...'
