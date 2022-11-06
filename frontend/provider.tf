@@ -9,7 +9,7 @@ terraform {
     bucket         = "junglemeet-statefile"
     key            = "frontend/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "terraform-statelock-frontend"
+#     dynamodb_table = "terraform-statelock-frontend"
   }
 }
 
