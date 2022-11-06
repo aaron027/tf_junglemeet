@@ -5,12 +5,12 @@ terraform {
       version = "~> 4.0"
     }
   }
-  # backend "s3" {
-  #   bucket         = "junglemeet-backend"
-  #   key            = "prod/terraform.tfstate"
-  #   region         = "us-east-1"
-  #   dynamodb_table = "terraform-state-lock-dynamo-junglemeet"
-  # }
+  backend "s3" {
+    bucket         = "junglemeet-statefile"
+    key            = "frontend/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-statelock-frontend"
+  }
 }
 
 
