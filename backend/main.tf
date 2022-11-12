@@ -9,13 +9,13 @@ terraform {
       version = "~>4.0"
     }
   }
-  backend "s3" {
-    bucket  = "junglemeet-statefile"
-    encrypt = true
-    key     = "backend/terraform.tfstate"
-    region  = "us-east-1"
-#     dynamodb_table = "terraform-statelock-backend"
-  }
+#   backend "s3" {
+#     bucket  = "junglemeet-statefile"
+#     encrypt = true
+#     key     = "backend/terraform.tfstate"
+#     region  = "us-east-1"
+# #     dynamodb_table = "terraform-statelock-backend"
+#   }
 }
 
 # resource "aws_dynamodb_table" "terraform-statelock-backend" {
